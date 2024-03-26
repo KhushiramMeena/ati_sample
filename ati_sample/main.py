@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
 # Define endpoints
 @app.get("/")
-async def read_root():
+async def read_root()
     return {"message": "Hello, World!"}
 
 @app.get("/about")
