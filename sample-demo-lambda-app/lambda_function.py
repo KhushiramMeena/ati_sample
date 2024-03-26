@@ -14,11 +14,13 @@ SITE = 'http://www.python.org/'
 CW_NAMESPACE = 'ProfilerPythonDemo'
 S3_BUCKET = os.environ['S3_BUCKET']
 
+# Initialize Boto3 clients outside of the Lambda handler
+s3_client = boto3.client('s3')
+cw_client = boto3.client('cloudwatch')
 
 def lambda_handler(event, context):
-    # Make some network calls using urllib and s3 client.
+    # Make some network calls using urllib.
     with urlopen(SITE) as response:
-        s3_client = boto3.client('s3')
         s3_client.put_object(Body=response.read(),
                              Bucket=S3_BUCKET,
                              Key='response.txt')
@@ -40,7 +42,6 @@ def lambda_handler(event, context):
 
 
 def put_metric(name, value):
-    cw_client = boto3.client('cloudwatch')
     metric_data_num = [{'MetricName': name, 'Value': value}]
     cw_client.put_metric_data(Namespace=CW_NAMESPACE, MetricData=metric_data_num)
 
