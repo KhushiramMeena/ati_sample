@@ -1,5 +1,0 @@
-django==3.2.23
-uwsgi==2.0.22
-requests
-codeguru_profiler_agent
-boto3
